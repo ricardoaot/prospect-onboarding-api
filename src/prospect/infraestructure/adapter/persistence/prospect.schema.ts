@@ -8,5 +8,6 @@ export class ProspectEntity extends Document {
   @Prop({ required: true }) birthday: Date;
   @Prop({ required: true, unique: true }) email: string;
   @Prop({ required: true }) phone: string;
+  @Prop({ required: true }) status: string;
 }
 export const ProspectSchema = SchemaFactory.createForClass(ProspectEntity);

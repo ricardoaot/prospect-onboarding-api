@@ -1,16 +1,16 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, registerEnumType } from '@nestjs/graphql';
+export enum ProspectStatus {
+    Pending = "pending",
+    Approved = "approved",
+    Rejected = "rejected",
+    Blacklisted = "blacklisted"
+}
 
-/*
-export class Prospect {
-    constructor(
-        public name: string,
-        public lastname: string,
-        public birthday: Date,
-        public email: string,
-        public phone: string,
-        public status: 'pending' | 'approved' | 'rejected' = 'pending',
-    ) {}
-}*/
+registerEnumType(ProspectStatus, {
+    name: 'ProspectStatus',
+    description: 'Status of a prospect',
+});
+
 @ObjectType()
 export class Prospect {
     @Field(() => ID)
@@ -18,7 +18,7 @@ export class Prospect {
 
     @Field()
     name: string;
-    
+
     @Field()
     lastname: string;
 
@@ -31,13 +31,17 @@ export class Prospect {
     @Field()
     phone: string;
 
+    @Field()
+    status: string;
+
     constructor(
         id: string,
         name: string,
         lastname: string,
         birthday: Date,
         email: string,
-        phone: string
+        phone: string,
+        status?: string
     ) {
         this.id = id;
         this.name = name;
@@ -45,6 +49,7 @@ export class Prospect {
         this.birthday = birthday;
         this.email = email;
         this.phone = phone;
+        this.status = status ?? ProspectStatus.Pending;
     }
 
 }

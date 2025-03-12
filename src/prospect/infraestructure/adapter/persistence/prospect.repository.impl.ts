@@ -25,4 +25,32 @@ export class ProspectRepositoryImpl implements ProspectRepository {
             savedProspect.phone,
         );
     }
+    //    async findAll(): Promise<Prospect[]> {
+
+    async findAll(
+        status?: string[]
+    ): Promise<Prospect[]> {
+
+        const prospects = await this.prospectModel.find(
+            { status: { $in: status } }
+        ).exec();
+        return prospects.map(
+            (prospect) =>
+                new Prospect(
+                    prospect._id.toString(),
+                    prospect.name,
+                    prospect.lastname,
+                    prospect.birthday,
+                    prospect.email,
+                    prospect.phone,
+                    prospect.status
+                )
+        );
+    }
+
+    async updateField(id: string, field: string, value: any): Promise<boolean> {
+        const updateObject = { [field]: value };
+        const result = await this.prospectModel.updateOne({ _id: id }, { $set: updateObject }).exec();
+        return result.modifiedCount > 0;
+    }
 }

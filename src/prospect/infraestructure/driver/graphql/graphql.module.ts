@@ -5,9 +5,12 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
 import { 
     CreateProspectUseCase, 
-    GetProspectUseCase 
+    GetProspectUseCase,
+    GetProspectListUseCase,
+    QualifyProspectUseCase
 } from '../../../application/use-cases';
 import { DatabaseModule } from '../../driven/database/database.module';
+import { DateResolver } from 'graphql-scalars';
 
 @Module({
     imports: [
@@ -17,13 +20,16 @@ import { DatabaseModule } from '../../driven/database/database.module';
             autoSchemaFile: true,
             playground: process.env.NODE_ENV === 'dev',
             debug: process.env.NODE_ENV === 'dev', 
+            resolvers: { Date: DateResolver }, 
         }),
         DatabaseModule
     ],
     providers: [
         ProspectResolver, 
         GetProspectUseCase, 
-        CreateProspectUseCase
+        CreateProspectUseCase,
+        GetProspectListUseCase,
+        QualifyProspectUseCase
     ],
 
     exports: [GraphQLModule],
