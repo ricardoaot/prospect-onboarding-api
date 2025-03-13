@@ -46,10 +46,21 @@ export class ProspectResolver {
     @Args('birthday', { type: () => DateResolver }) birthday: Date,
     @Args('email') email: string,
     @Args('phone') phone: string,
+    @Args('profilePhoto') profilePhoto: string,
+    @Args('country') country: string,
+    @Args('city') city: string,
+    @Args('fullAddress') fullAddress: string,
+    @Args('locationCoordinates') locationCoordinates: string,
+    @Args('bankName') bankName: string,
+    @Args('bankAccountNumber') bankAccountNumber: string,
+    @Args('taxID') taxID: string,
+    @Args('documentOrPassport') documentOrPassport: string,
+    @Args('otherRelevantDetails') otherRelevantDetails: string,
+    @Args('fileOtherInfo') fileOtherInfo: string
   ): Promise<Prospect> {
 
     return this.createProspectUseCase.execute(
-      new Prospect('', name, lastname, birthday, email, phone)
+      new Prospect('', name, lastname, birthday, email, phone, profilePhoto, country, city, fullAddress, locationCoordinates, bankName, bankAccountNumber, taxID, documentOrPassport, otherRelevantDetails, fileOtherInfo)
     );
 
   }

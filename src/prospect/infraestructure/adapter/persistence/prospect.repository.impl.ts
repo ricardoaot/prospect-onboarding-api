@@ -23,6 +23,17 @@ export class ProspectRepositoryImpl implements ProspectRepository {
             savedProspect.birthday,
             savedProspect.email,
             savedProspect.phone,
+            savedProspect.profilePhoto,
+            savedProspect.country,
+            savedProspect.city,
+            savedProspect.fullAddress,
+            savedProspect.locationCoordinates,
+            savedProspect.bankName,
+            savedProspect.bankAccountNumber,
+            savedProspect.taxID,
+            savedProspect.documentOrPassport,
+            savedProspect.otherRelevantDetails,
+            savedProspect.fileOtherInfo,
         );
     }
     //    async findAll(): Promise<Prospect[]> {
@@ -43,6 +54,17 @@ export class ProspectRepositoryImpl implements ProspectRepository {
                     prospect.birthday,
                     prospect.email,
                     prospect.phone,
+                    prospect.profilePhoto,
+                    prospect.country,
+                    prospect.city,
+                    prospect.fullAddress,
+                    prospect.locationCoordinates,
+                    prospect.bankName,
+                    prospect.bankAccountNumber,
+                    prospect.taxID,
+                    prospect.documentOrPassport,
+                    prospect.otherRelevantDetails,
+                    prospect.fileOtherInfo,
                     prospect.status
                 )
         );

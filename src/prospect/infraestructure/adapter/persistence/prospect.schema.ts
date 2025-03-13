@@ -8,6 +8,17 @@ export class ProspectEntity extends Document {
   @Prop({ required: true }) birthday: Date;
   @Prop({ required: true, unique: true }) email: string;
   @Prop({ required: true }) phone: string;
+  @Prop({ required: true }) profilePhoto: string;
+  @Prop({ required: true }) country: string;
+  @Prop({ required: true }) city: string;
+  @Prop({ required: true }) fullAddress: string;
+  @Prop({ required: true }) locationCoordinates: string;
+  @Prop({ required: true }) bankName: string;
+  @Prop({ required: true }) bankAccountNumber: string;
+  @Prop({ required: true }) taxID: string;
+  @Prop({ required: true }) documentOrPassport: string;
+  @Prop({ required: true }) otherRelevantDetails: string;
+  @Prop({ required: true }) fileOtherInfo: string;
   @Prop({ required: true }) status: string;
 }
 export const ProspectSchema = SchemaFactory.createForClass(ProspectEntity);
