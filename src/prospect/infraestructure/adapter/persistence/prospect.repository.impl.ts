@@ -38,7 +38,7 @@ export class ProspectRepositoryImpl implements ProspectRepository {
                 savedProspect.fileOtherInfo,
             );
         } catch (error) {
-            console.error('Database Error:', error); // Para depuración
+            console.error('Database Error:', error);
 
             if (error instanceof MongoServerError && error.code === 11000) {
                 throw new GraphQLError('Prospect email already exists', {
