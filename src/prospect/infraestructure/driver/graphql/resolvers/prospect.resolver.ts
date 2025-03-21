@@ -31,12 +31,7 @@ export class ProspectResolver {
   ): Promise<Prospect[]> {
     return this.getProspectListUseCase.execute(statuses || []);
   }
-  /*
-    @Query(() => [Prospect])
-    async getProspects(): Promise<Prospect[]> {
-      return this.getProspectListUseCase.execute();
-    }
-  */
+
 
 
   @Mutation(() => Prospect)
