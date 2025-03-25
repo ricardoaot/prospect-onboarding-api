@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ProspectRepository } from '../../../domain/port/prospect.repository';
+import { ProspectRepository } from '../../../../application/port/driven/prospect.repository';
 import { ProspectEntity } from './prospect.schema';
-import { Prospect } from '../../../domain/model/prospect';
+import { Prospect } from '../../../../domain/model/prospect';
+import { MongoServerError } from 'mongodb';
+import { GraphQLError } from 'graphql';
 
 @Injectable()
 export class ProspectRepositoryImpl implements ProspectRepository {
@@ -12,31 +14,44 @@ export class ProspectRepositoryImpl implements ProspectRepository {
     ) { }
 
     async create(prospect: Prospect): Promise<Prospect> {
+        try {
+            const createdProspect = new this.prospectModel(prospect);
+            const savedProspect = await createdProspect.save();
 
-        const createdProspect = new this.prospectModel(prospect);
-        const savedProspect = await createdProspect.save();
+            return new Prospect(
+                savedProspect.id,
+                savedProspect.name,
+                savedProspect.lastname,
+                savedProspect.birthday,
+                savedProspect.email,
+                savedProspect.phone,
+                savedProspect.profilePhoto,
+                savedProspect.country,
+                savedProspect.city,
+                savedProspect.fullAddress,
+                savedProspect.locationCoordinates,
+                savedProspect.bankName,
+                savedProspect.bankAccountNumber,
+                savedProspect.taxID,
+                savedProspect.documentOrPassport,
+                savedProspect.otherRelevantDetails,
+                savedProspect.fileOtherInfo,
+            );
+        } catch (error) {
+            console.error('Database Error:', error);
 
-        return new Prospect(
-            savedProspect.id,
-            savedProspect.name,
-            savedProspect.lastname,
-            savedProspect.birthday,
-            savedProspect.email,
-            savedProspect.phone,
-            savedProspect.profilePhoto,
-            savedProspect.country,
-            savedProspect.city,
-            savedProspect.fullAddress,
-            savedProspect.locationCoordinates,
-            savedProspect.bankName,
-            savedProspect.bankAccountNumber,
-            savedProspect.taxID,
-            savedProspect.documentOrPassport,
-            savedProspect.otherRelevantDetails,
-            savedProspect.fileOtherInfo,
-        );
+            if (error instanceof MongoServerError && error.code === 11000) {
+                throw new GraphQLError('Prospect email already exists', {
+                    extensions: { code: 'PROSPECT_EMAIL_ALREADY_EXISTS', status: 400 },
+                });
+            }
+
+            throw new GraphQLError('Unknown error occurred', {
+                extensions: { code: 'UNKNOWN_ERROR', status: 500 },
+            });
+        }
     }
-    //    async findAll(): Promise<Prospect[]> {
+
 
     async findAll(
         status?: string[]

@@ -17,8 +17,8 @@ export class ProspectEntity extends Document {
   @Prop({ required: true }) bankAccountNumber: string;
   @Prop({ required: true }) taxID: string;
   @Prop({ required: true }) documentOrPassport: string;
-  @Prop({ required: true }) otherRelevantDetails: string;
-  @Prop({ required: true }) fileOtherInfo: string;
+  @Prop({ required: false }) otherRelevantDetails: string;
+  @Prop({ required: false }) fileOtherInfo: string;
   @Prop({ required: true }) status: string;
 }
 export const ProspectSchema = SchemaFactory.createForClass(ProspectEntity);

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ProspectRepository, ProspectRepositoryToken } from '../../domain/port/prospect.repository';
+import { ProspectRepository, ProspectRepositoryToken } from '../port/driven/prospect.repository';
 import { Prospect } from '../../domain/model/prospect';
 
 @Injectable()

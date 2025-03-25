@@ -1,4 +1,4 @@
-import { Prospect } from "../model/prospect";
+import { Prospect } from "../../../domain/model/prospect";
 export const ProspectRepositoryToken = Symbol('ProspectRepository');
 
 export interface ProspectRepository {

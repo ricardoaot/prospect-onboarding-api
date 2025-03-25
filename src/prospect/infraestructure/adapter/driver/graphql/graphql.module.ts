@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ProspectResolver } from './resolvers/prospect.resolver';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
@@ -7,10 +6,15 @@ import {
     CreateProspectUseCase, 
     GetProspectUseCase,
     GetProspectListUseCase,
-    QualifyProspectUseCase
-} from '../../../application/use-cases';
-import { DatabaseModule } from '../../driven/database/database.module';
+    QualifyProspectUseCase,
+    GetCountryListUseCase
+} from '../../../../application/use-cases';
+import { DatabaseModule } from '../../driven/persistence/database.module';
+import { ExternalServicesModule } from '../../driven/external-services/externalServices.module';
+import { ProspectResolver } from './resolvers/prospect.resolver';
+import { CountryResolver } from '../../driver/graphql/resolvers/country.resolver';
 import { DateResolver } from 'graphql-scalars';
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 
 @Module({
     imports: [
@@ -20,16 +24,23 @@ import { DateResolver } from 'graphql-scalars';
             autoSchemaFile: true,
             playground: process.env.NODE_ENV === 'dev',
             debug: process.env.NODE_ENV === 'dev', 
-            resolvers: { Date: DateResolver }, 
+            resolvers: { 
+                Date: DateResolver,
+                Upload: GraphQLUpload
+             }, 
         }),
-        DatabaseModule
+        DatabaseModule,
+        ExternalServicesModule
     ],
     providers: [
         ProspectResolver, 
         GetProspectUseCase, 
         CreateProspectUseCase,
         GetProspectListUseCase,
-        QualifyProspectUseCase
+        QualifyProspectUseCase,
+
+        CountryResolver,
+        GetCountryListUseCase
     ],
 
     exports: [GraphQLModule],

@@ -2,7 +2,7 @@
 
 import { Inject, Injectable } from '@nestjs/common';
 import { Prospect } from '../../domain/model/prospect';
-import { ProspectRepository, ProspectRepositoryToken  } from '../../domain/port/prospect.repository'
+import { ProspectRepository, ProspectRepositoryToken  } from '../port/driven/prospect.repository'
 
 @Injectable()
 export class QualifyProspectUseCase {
