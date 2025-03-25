@@ -1,4 +1,4 @@
-import { Country } from "../model/country";
+import { Country } from "../../../domain/model/country";
 export const CountryRepositoryToken = Symbol('CountryRepository');
 
 export interface CountryRepository {

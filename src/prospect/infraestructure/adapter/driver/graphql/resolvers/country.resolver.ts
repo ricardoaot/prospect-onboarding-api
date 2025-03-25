@@ -1,8 +1,8 @@
 import { Resolver, Query } from '@nestjs/graphql';
 import {
   GetCountryListUseCase
-} from '../../../../application/use-cases';
-import { Country } from '../../../../domain/model/country';
+} from '../../../../../application/use-cases';
+import { Country } from '../../../../../domain/model/country';
 
 @Resolver(() => Country)
 export class CountryResolver {

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ProspectRepository } from '../../../domain/port/prospect.repository';
+import { ProspectRepository } from '../../../../application/port/driven/prospect.repository';
 import { ProspectEntity } from './prospect.schema';
-import { Prospect } from '../../../domain/model/prospect';
+import { Prospect } from '../../../../domain/model/prospect';
 import { MongoServerError } from 'mongodb';
 import { GraphQLError } from 'graphql';
 

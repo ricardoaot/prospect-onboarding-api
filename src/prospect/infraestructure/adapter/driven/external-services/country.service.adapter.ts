@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CountryRepository } from '../../../domain/port/country.repository';
-import { Country } from '../../../domain/model/country';
+import { CountryRepository } from '../../../../application/port/driven/country.repository';
+import { Country } from '../../../../domain/model/country';
 
 @Injectable()
 export class CountryRepositoryImpl implements CountryRepository {

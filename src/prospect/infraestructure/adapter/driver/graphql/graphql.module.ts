@@ -8,12 +8,13 @@ import {
     GetProspectListUseCase,
     QualifyProspectUseCase,
     GetCountryListUseCase
-} from '../../../application/use-cases';
-import { DatabaseModule } from '../../driven/database/database.module';
-import { ExternalApiModule } from '../../driven/external-api/country.module';
+} from '../../../../application/use-cases';
+import { DatabaseModule } from '../../driven/persistence/database.module';
+import { ExternalServicesModule } from '../../driven/external-services/externalServices.module';
 import { ProspectResolver } from './resolvers/prospect.resolver';
-import { CountryResolver } from './resolvers/country.resolver';
+import { CountryResolver } from '../../driver/graphql/resolvers/country.resolver';
 import { DateResolver } from 'graphql-scalars';
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 
 @Module({
     imports: [
@@ -23,10 +24,13 @@ import { DateResolver } from 'graphql-scalars';
             autoSchemaFile: true,
             playground: process.env.NODE_ENV === 'dev',
             debug: process.env.NODE_ENV === 'dev', 
-            resolvers: { Date: DateResolver }, 
+            resolvers: { 
+                Date: DateResolver,
+                Upload: GraphQLUpload
+             }, 
         }),
         DatabaseModule,
-        ExternalApiModule
+        ExternalServicesModule
     ],
     providers: [
         ProspectResolver, 

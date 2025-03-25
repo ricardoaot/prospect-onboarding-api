@@ -4,9 +4,11 @@ import {
   GetProspectUseCase,
   GetProspectListUseCase,
   QualifyProspectUseCase
-} from '../../../../application/use-cases/';
-import { Prospect } from '../../../../domain/model/prospect';
-import { DateResolver } from 'graphql-scalars';
+} from '../../../../../application/use-cases';
+import { Prospect } from '../../../../../domain/model/prospect';
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
+import * as Upload from 'graphql-upload/Upload.js';
+import { CreateProspectDto } from 'src/prospect/application/dto/create-prospect.dto';
 
 @Resolver(() => Prospect)
 export class ProspectResolver {
@@ -24,7 +26,6 @@ export class ProspectResolver {
   }
 
 
-
   @Query(() => [Prospect])
   async getProspects(
     @Args('statuses', { type: () => [String], nullable: true }) statuses?: string[],
@@ -33,32 +34,21 @@ export class ProspectResolver {
   }
 
 
-
   @Mutation(() => Prospect)
-  async createProspect(
-    @Args('name') name: string,
-    @Args('lastname') lastname: string,
-    @Args('birthday', { type: () => DateResolver }) birthday: Date,
-    @Args('email') email: string,
-    @Args('phone') phone: string,
-    @Args('profilePhoto') profilePhoto: string,
-    @Args('country') country: string,
-    @Args('city') city: string,
-    @Args('fullAddress') fullAddress: string,
-    @Args('locationCoordinates') locationCoordinates: string,
-    @Args('bankName') bankName: string,
-    @Args('bankAccountNumber') bankAccountNumber: string,
-    @Args('taxID') taxID: string,
-    @Args('documentOrPassport') documentOrPassport: string,
-    @Args('otherRelevantDetails') otherRelevantDetails: string,
-    @Args('fileOtherInfo') fileOtherInfo: string
+  async createProspect(   
+    @Args('data') data: CreateProspectDto,
+    @Args(
+      'profilePhoto', 
+      { type: () => GraphQLUpload }
+    ) profilePhoto: Upload,
   ): Promise<Prospect> {
-
     return this.createProspectUseCase.execute(
-      new Prospect('', name, lastname, birthday, email, phone, profilePhoto, country, city, fullAddress, locationCoordinates, bankName, bankAccountNumber, taxID, documentOrPassport, otherRelevantDetails, fileOtherInfo)
+      data
+      ,profilePhoto
     );
 
   }
+
 
   @Mutation(() => Boolean)
   async qualifyProspect(
